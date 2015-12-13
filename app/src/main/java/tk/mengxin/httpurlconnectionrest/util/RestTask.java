@@ -51,7 +51,13 @@ public class RestTask extends AsyncTask<Void, Integer, Object> {
         mConnection = connection;
     }
 
-
+    /**
+     * 该函数主要是传入 <key,value> 将其转化为HTTP请求的字符创  key=value&key=value...
+     * ContentValues的具体用法可以参考:
+     * @linnk http://stackoverflow.com/questions/29378012/namevaluepair-deprecated-for-openconnection/32559098
+     * @param formData ContentValues 格式的key,value对.
+     * @throws UnsupportedEncodingException
+     */
     public void setFormBody(ContentValues formData) throws UnsupportedEncodingException {
         if (formData == null) {
             mFormBody = null;
@@ -176,6 +182,14 @@ public class RestTask extends AsyncTask<Void, Integer, Object> {
             }
         }
     }
+
+    /**
+     * 私有成员函数, 应用于POST请求的执行过程, 向远程服务器传送POST的form数据.
+     *
+     * @param charset
+     * @param output
+     * @throws IOException
+     */
     private void writeFormData(String charset,
                                OutputStream output) throws IOException {
         try {
