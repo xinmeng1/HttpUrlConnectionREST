@@ -1,9 +1,9 @@
 package tk.mengxin.httpurlconnectionrest.util;
 
+import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpResponseException;
 
 import java.io.BufferedWriter;
@@ -14,12 +14,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Android Studio.
@@ -49,21 +50,41 @@ public class RestTask extends AsyncTask<Void, Integer, Object> {
     public RestTask(HttpURLConnection connection) {
         mConnection = connection;
     }
-    public void setFormBody(List<NameValuePair> formData) {
+
+
+    public void setFormBody(ContentValues formData) throws UnsupportedEncodingException {
         if (formData == null) {
             mFormBody = null;
             return;
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < formData.size(); i++) {
-            NameValuePair item = formData.get(i);
-            sb.append( URLEncoder.encode(item.getName()) );
+
+        int i = 0;
+        String key;
+        String value;
+        for (Map.Entry<String, Object> entry : formData.valueSet()) {
+            key = entry.getKey(); // name
+            value = entry.getValue().toString(); // value
+            sb.append( URLEncoder.encode(key,"UTF8") );
             sb.append("=");
-            sb.append( URLEncoder.encode(item.getValue()) );
+            sb.append( URLEncoder.encode(value,"UTF8") );
             if (i != (formData.size() - 1)) {
                 sb.append("&");
             }
+            i++;
         }
+
+//        for (int i = 0; i < formData.size(); i++) {
+//
+//            ContentValues item = formData.get(i);
+//            Set<Map.Entry<String, Object>> entrySet = item.valueSet();
+//            sb.append( URLEncoder.encode(item.getName()) );
+//            sb.append("=");
+//            sb.append( URLEncoder.encode(item.getValue()) );
+//            if (i != (formData.size() - 1)) {
+//                sb.append("&");
+//            }
+//        }
         mFormBody = sb.toString();
     }
     public void setUploadFile(File file, String fileName) {

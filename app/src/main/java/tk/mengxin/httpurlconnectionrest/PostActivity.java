@@ -2,16 +2,11 @@ package tk.mengxin.httpurlconnectionrest;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import tk.mengxin.httpurlconnectionrest.util.RestTask;
 import tk.mengxin.httpurlconnectionrest.util.RestUtil;
@@ -41,14 +36,21 @@ public class PostActivity extends Activity implements
         //Create the request
         try{
 //Simple POST
-            List<NameValuePair> parameters =
-                    new ArrayList<NameValuePair>();
-            parameters.add(new BasicNameValuePair("title",
-                    "Android Recipes"));
-            parameters.add(new BasicNameValuePair("summary",
-                    "Learn Android Quickly"));
-            parameters.add(new BasicNameValuePair("author",
-                    "Smith"));
+//            List<NameValuePair> parameters =
+//                    new ArrayList<NameValuePair>();
+//            parameters.add(new BasicNameValuePair("title",
+//                    "Android Recipes"));
+//            parameters.add(new BasicNameValuePair("summary",
+//                    "Learn Android Quickly"));
+//            parameters.add(new BasicNameValuePair("author",
+//                    "Smith"));
+
+            ContentValues parameters =
+                    new ContentValues();
+            parameters.put("title", "Android Recipes");
+            parameters.put("summary", "Learn Android Quickly");
+            parameters.put("author", "Smith");
+
             RestTask postTask = RestUtil.obtainFormPostTask(
                     POST_URI, parameters);
             postTask.setResponseCallback(this);

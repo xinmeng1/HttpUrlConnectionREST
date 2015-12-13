@@ -2,6 +2,7 @@ package tk.mengxin.httpurlconnectionrest;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,13 +10,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import tk.mengxin.httpurlconnectionrest.util.RestTask;
 import tk.mengxin.httpurlconnectionrest.util.RestUtil;
@@ -56,12 +52,18 @@ public class SearchActivity extends Activity implements
             image.compress(Bitmap.CompressFormat.PNG, 0, out);
             out.flush();
             out.close();
-            List<NameValuePair> fileParameters =
-                    new ArrayList<NameValuePair>();
-            fileParameters.add(new BasicNameValuePair("title",
-                    "Android Recipes"));
-            fileParameters.add(new BasicNameValuePair("desc",
-                    "Image File Upload"));
+//            List<NameValuePair> fileParameters =
+//                    new ArrayList<NameValuePair>();
+//            fileParameters.add(new BasicNameValuePair("title",
+//                    "Android Recipes"));
+//            fileParameters.add(new BasicNameValuePair("desc",
+//                    "Image File Upload"));
+
+            ContentValues fileParameters = new ContentValues();
+
+            fileParameters.put("title", "Android Recipes");
+            fileParameters.put("desc", "Image File Upload");
+
             RestTask uploadTask =
                     RestUtil.obtainMultipartPostTask(
                             POST_URI, fileParameters,

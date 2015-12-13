@@ -1,13 +1,12 @@
 package tk.mengxin.httpurlconnectionrest.util;
 
-import org.apache.http.NameValuePair;
+import android.content.ContentValues;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 /**
  * Created by Android Studio.
@@ -30,7 +29,7 @@ public class RestUtil {
         return task;
     }
     public static RestTask obtainFormPostTask(String url,
-                                              List<NameValuePair> formData)
+                                              ContentValues formData)
             throws MalformedURLException, IOException {
         HttpURLConnection connection =
                 (HttpURLConnection) (new URL(url))
@@ -43,7 +42,7 @@ public class RestUtil {
         return task;
     }
     public static RestTask obtainMultipartPostTask(
-            String url, List<NameValuePair> formPart,
+            String url, ContentValues formPart,
             File file, String fileName)
             throws MalformedURLException, IOException {
         HttpURLConnection connection =
